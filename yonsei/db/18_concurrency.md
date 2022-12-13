@@ -65,7 +65,7 @@ A **deadlock** is a cycle of transactions waiting for locks to be released by ea
 
 A system is in a deadlock state *iff* the wait-for graph is *cyclic*. Periodically check for cycles.
 
-#### Recovery
+#### Deadlock Recovery
 * Choose a victim (to be rolled back): Select tx with minimum rollback cost
 * How much to roll back?: Total rollback(BAD) *vs.* Only as far as necessary to break deadlock(GOOD)
 * Prevent starvation: Include # of rollbacks as a cost factor

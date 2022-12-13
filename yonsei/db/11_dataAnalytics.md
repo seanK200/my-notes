@@ -10,6 +10,7 @@
 Interactive analysis, different views/summaries of data
 
 ### Multi-dimensional Data
+Data that can be modeled as dimension and measure attributes.
 * **Measure attributes**: Measure some value
 * **Dimension attributes**: Dimensions on which the measure attribs are viewed
 
@@ -41,7 +42,7 @@ A **data warehouse** is a repository of information gathered from multiple sourc
 * **Destination-Driven Architecture**: Warehouses request data (periodic)
 * Syncing source/destination expensive
 #### What schema to use
-* Schema integartion
+* Schema integration
 
 #### Data cleansing
 * Mistakes: **Merge** from multiple sources and **purge** duplicates
