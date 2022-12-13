@@ -26,8 +26,8 @@ To ensure `ATOMICITY`,
 ## Data Access
 
 ### Blocks
-* Buffer Blocks: Main memory (temporary)
-* Physical Blocks: Disk (permanent)
+* **Buffer Block**: Main memory (temporary)
+* **Physical Block**: Disk (permanent)
 
 ### Work Area
 * Transaction $T_i$ has *private* **work area** in *main memory* with local copies of all data items accessed and updated by $T_i$.
@@ -67,7 +67,7 @@ Defer all writes until transaction partially commits.
 1. Write `T_i START` to log
 1. $write(X)$
 1. Write modifications to the **log**, and *defer* the actual write.
-1. $partially\_commit(T_i)$
+1. (partially) $commit(T_i)$
 1. Write `T_i COMMIT` to log
 1. Read the log and actually *execute* the deferred writes
 
@@ -83,23 +83,23 @@ Defer all writes until transaction partially commits.
 * Contains both old *and* new values of items
 
 #### After crash
-1. $undo(T_i)$ restores data items to the *old* value, going **backwards** from the *last* log entry
-1. $redo(T_i)$ update data items to the *new* value, going **forwards** from the *first* log entry
+1. $undo$ if `START` is logged, but not `COMMIT`. Restore the *old* value, going **backwards** from the *last* log entry
+1. $redo$ if both `START` and `COMMIT` is logged. Update to *new* value, going **forwards** from the *first* log entry
 
 
 ## Checkpoints
 ### Problems
 * Search of entire log is time-consuming
-* Transactions that need redo are actually already written
+* Transactions that need redo may have been already written
 
-### Perform checkpints
+### Perform checkpoints
 1. Output all log records (main memory → stable storage)
 1. Output all buffered blocks (main memory → stable storage)
 1. Output log record to stable storage: `CHECKPOINT`
 
 ### During Checkpoint Recovery
-1. **Redo** all transactions after checkpoint (transactions that already output to disk)
-1. **Undo** all transactions during system failure.
+1. $redo$ all transactions after checkpoint (ignore everything before, which are transactions that already output to disk)
+1. $undo$ all transactions not committed during system failure.
 
 ## Write-Ahead Logging (WAL)
-Before a block $B_x$ can output to disk, all log records about $x$ needs must be output to stable storage first.
+Before a block $B_x$ can output to disk, all log records about $x$ must output to stable storage first before writing to database.

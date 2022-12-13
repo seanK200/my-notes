@@ -14,7 +14,7 @@ Interactive analysis, different views/summaries of data
 * **Dimension attributes**: Dimensions on which the measure attribs are viewed
 
 #### Cross Tabulation (Pivot Table)
- ![pivot table](./11_1.png)
+![pivot table](./11_1.png)
 
 * **row/column headers**: Dimension attributes form 
     * Rest of the dimension attributes listed at the top
@@ -33,7 +33,7 @@ Multidimensional($n$) generalization of a cross-tab
 1. **Drill down**: Coarser → finer granularity data
 
 ## Data Warehousing
-A **data warehouse** is a repository of information gathered from multiple sources, stored under a *unified* schema, at a *single* site. Data sources often store *current* data, while warehouses provides unified view of all data, including *historical* data.
+A **data warehouse** is a repository of information gathered from multiple sources, stored under a *unified* schema, at a *single* site. Data sources often only store *current* data, while warehouses provides unified view of all data, including *historical* data.
 
 ### Design Issues
 #### When/How to gather data
@@ -50,7 +50,7 @@ A **data warehouse** is a repository of information gathered from multiple sourc
 * Warehouse may be materialized view of data source schema
 
 #### What to summarize
-* Raw data: too large → Aggregated data often enough
+* Raw data: too large → Aggregated data is enough
 * Queries on raw data can often be transformed by query optimizer to use aggregate values
 
 ### Star Schemas
@@ -84,25 +84,55 @@ Classification rules can be shown as a **decision tree**
 * Greedy, top-down generation of decision trees
     * Internal node: Partitions the data into groups based on...
         * Partiioning attribute
-        * paritioning column
+        * Paritioning column
     * Leaf node: Either...
         * Data items are of the same class
         * No further classification possible
 
 ### Best Splits
+Pick best attributes and conditions to partition.
+
+Set **purity**: measured from **Gini**, **Entropy**,...
+
+$$ Impurity(S_1, S_2, ... S_r) = \sum_{i=1}^r {|S_i| \over |S|}Info(S_i) $$
+$$ Info(S_i) = - \sum_{j=1}^mp_jlog_2p_j $$
+
+Information gain (IG) due to split:
+
+$$ IG(S, \{S_1, S_2, ..., S_r\}) = Info(S) - Impurity(S_1, S_2, ..., S_r) $$
 
 ### Bayesian Classifiers
+Bayes' Theorem:
+
+$$ P(c_j \mid x) = { P(x \mid c_j) P(c_j) \over P(x) } $$
+
+Naïve Bayesian Classifiers:
+
+$$ P(x \mid c_j) = P(x_1, ..., x_n \mid c_j) = \prod_{i=1}^nP(x_i \mid c_j) $$
+
 
 ### Support Vector Machine Classifiers
+<img src="./11_5.png"  width="400px"/>
 
-### Higher Dimensions: Visual
+#### Higher Dimensions: Visual
+<img src="./11_6.png"  width="500px"/>
 
 ### Kernel Trick: Visual
+<img src="./11_7.png"  width="600px"/>
 
 ### Neural Network Classifiers
+Input → Hidden → Output
 
 ## Regression
 Find coefficient that gives the best possible **fit**
+* Linear regression
+* Curve fitting
+
+<img src="./11_8.png" width="400px" />
+
+Fit may be inaccurate because:
+* Noise
+* Relationship not polynomial
 
 ## Association
 
@@ -120,8 +150,13 @@ How often is the consequent true when the antecedent is true?
 $$Confidence(X \Rightarrow Y) = {Frequency(X, Y) \over Frequency(X)}$$
 
 ## Clustering
+Find clusters in points so that similar points lie in same cluster
+* Group points so that the average distance of points from the centroid is minimized
+* Minimize average distance between every pair of points in cluster
 
 ### Hierarchial Clustering
+* agglomerative clustering: start small, cluster clusters
+* divisive clustering algorithms: start with one large cluster, refine (break) clusters
 
 ## Other types of Mining
 

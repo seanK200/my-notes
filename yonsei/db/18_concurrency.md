@@ -45,11 +45,11 @@ Transactions can be serialized in the order of their **lock points** (provable).
 
 ### Modified 2PL
 
-#### Strict 2PL
+#### Strict 2PL Protocol
 * Tranasaction must hold *all exclusive* locks until commit/abort.
 * Prevents **cascading rollbacks** (caused by dirty reads)
 
-#### Rigorous 2PL
+#### Rigorous 2PL Protocol
 * Transaction must hold *all* locks until commit/abort.
 * Transactions can be serialized in the order they commit.
 
@@ -60,12 +60,12 @@ A **deadlock** is a cycle of transactions waiting for locks to be released by ea
 
 ### Deadlock Detection
 #### Wait-for graph
-* V: Transactions
-* E: $T_i \rarr T_j$  ($T_i$ is waiting for $T_j$)
+* $V$: Transactions
+* $E$: $T_i \rarr T_j$  ($T_i$ is waiting for $T_j$)
 
 A system is in a deadlock state *iff* the wait-for graph is *cyclic*. Periodically check for cycles.
 
 #### Recovery
 * Choose a victim (to be rolled back): Select tx with minimum rollback cost
-* How much to roll back?: Total rollback(X) *vs.* Only as far as necessary to break deadlock(O)
+* How much to roll back?: Total rollback(BAD) *vs.* Only as far as necessary to break deadlock(GOOD)
 * Prevent starvation: Include # of rollbacks as a cost factor
